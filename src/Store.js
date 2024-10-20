@@ -1,20 +1,21 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { createSlice, configureStore } from '@reduxjs/toolkit';
 
-const initialState = {
-    cart: []
-};
+const cartSlice = createSlice({
+  name: 'cart',
+  initialState: {
+    cart: [],
+  },
+  reducers: {
+    addToCart(state, action) {
+      state.cart.push(action.payload);
+    },
+  },
+});
 
-    function cartReducer(state = initialState, action) {
-        switch (action.type) {
-            case 'ADD_TO_CART':
-                return {...state, cart: [...state.cart, action.payload] };
-                default:
-                    return state;
-        }
-    }
+export const { addToCart } = cartSlice.actions;
 
-    const store = configureStore ({
-        reducer: cartReducer,
-    });
+const store = configureStore({
+  reducer: cartSlice.reducer,
+});
 
-    export default store;
+export default store;
